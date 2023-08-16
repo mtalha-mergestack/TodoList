@@ -1,34 +1,31 @@
 import React , {useState} from 'react'
-import styles from './TodoList.module.css';
-import TaskList from '../TaskList/TaskList';
+import styles from '@/components/TodoList/TodoList.module.css'
+import TaskList from '@/components/TaskList/TaskList';
 
 function TodoList() {
   const [list,setlist] = useState([])
 
-  const addListHandler = (e)=>{
-    if(e.key == 'Enter'){
-      setlist([...list, e.target.value])
-      e.target.value=""
+  const addListHandler = (event)=>{
+    if(event.key == 'Enter'){
+      setlist([...list, event.target.value])
+      event.target.value=""
     }    
   }
 
-  const removeListHandler = (e)=>{
-    const index = e.target.id
+  const removeListHandler = (event)=>{
+    const index = event.target.id
     let copy = [...list];
-    if (index !== -1) {
-      copy = copy.filter((e,i) => i!=index);
-      if(copy.length == 0) setlist([])
-      else setlist([...copy])
-    }  
+    copy = copy.filter((event,i) => i!=index);
+    if(copy.length == 0) setlist([])
+    else setlist([...copy])
+  
   }
 
-  const editListHandler = (e)=>{ 
-    const index = e.target.id
+  const editListHandler = (event)=>{ 
+    const index = event.target.id
     let copy = [...list];
-    if (index !== -1) {
-      copy[index] = e.target.value;
-    }
-      setlist([...copy])
+    copy[index] = event.target.value;
+    setlist([...copy])
   }
 
   return (

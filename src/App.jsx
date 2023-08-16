@@ -1,9 +1,7 @@
-
-import './App.css'
-import TodoList from './components/TodoList/TodoList'
+import TodoList from '@/components/TodoList/TodoList'
+import '@/App.css'
 
 function App() {
-
   return (
     <>
      <TodoList/>
