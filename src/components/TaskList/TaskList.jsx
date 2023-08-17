@@ -20,7 +20,7 @@ function TaskList({ keyId, value, editListHandler, removeListHandler }) {
 
   return (
     <li key={keyId}>
-      {isEditing ? "" : <input type="checkbox" onClick={(event)=>completed(event.target.checked)} />}
+      {isEditing || <input type="checkbox" onClick={(event) => completed(event.target.checked)} />}
       <span className={`${isCompleted ? styles.completed : ""}`}>
         {isEditing ? (
           <input
@@ -34,9 +34,7 @@ function TaskList({ keyId, value, editListHandler, removeListHandler }) {
           value
         )}
       </span>
-      {isCompleted ? (
-        ""
-      ) : (
+      {isCompleted || (
         <i
           onClick={() => {
             setIsEditing(!isEditing);
@@ -44,7 +42,11 @@ function TaskList({ keyId, value, editListHandler, removeListHandler }) {
           className={`fa fa-edit ${styles.right}`}
         ></i>
       )}
-      <i id={keyId} className={`fa fa-trash ${styles.right}`} onClick={(event)=>removeListHandler(event.target.id)}></i>
+      <i
+        id={keyId}
+        className={`fa fa-trash ${styles.right}`}
+        onClick={(event) => removeListHandler(event.target.id)}
+      ></i>
     </li>
   );
 }

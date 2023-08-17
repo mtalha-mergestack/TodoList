@@ -1,28 +1,27 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addTodo, removeTodo, editTodo } from "@/redux/actions";
 import styles from "@/components/TodoList/TodoList.module.css";
 import TaskList from "@/components/TaskList/TaskList";
 
 function TodoList() {
-  const [list, setlist] = useState([]);
+  const [taskInput, setTaskInput] = useState("");
+  const todos = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
 
-  const addListHandler = (event) => {
-    if (event.key == "Enter") {
-      setlist([...list, event.target.value]);
-      event.target.value = "";
+  const addListHandler = (key) => {
+    if (key == "Enter") {
+      dispatch(addTodo(taskInput));
+      setTaskInput("");
     }
   };
 
   const removeListHandler = (index) => {
-    let copy = [...list];
-    copy = copy.filter((event, i) => i != index);
-    if (copy.length == 0) setlist([]);
-    else setlist([...copy]);
+    dispatch(removeTodo(index));
   };
 
   const editListHandler = (index, value) => {
-    let copy = [...list];
-    copy[index] = value;
-    setlist([...copy]);
+    dispatch(editTodo(index, value));
   };
 
   return (
@@ -30,13 +29,15 @@ function TodoList() {
       <h1 className={styles.header}>My Todo</h1>
       <input
         className={styles.input}
+        value={taskInput}
         type="text"
         placeholder="Input task name and press enter to add"
-        onKeyDown={addListHandler}
+        onChange={(event) => setTaskInput(event.target.value)}
+        onKeyDown={(event) => addListHandler(event.key)}
       />
       <hr />
       <ul className={styles.listContainer}>
-        {list.map((val, i) => (
+        {todos.map((val, i) => (
           <TaskList
             key={i}
             keyId={i}
